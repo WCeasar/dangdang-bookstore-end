@@ -1,16 +1,23 @@
+/**
+ * 路由自动导入中间件
+ */
+
 import Koa from "koa";
 import path from "path";
 import fs from "fs";
 import Router from "koa-router";
 import body from "koa-body";
 import json from "koa-json";
-
+import globalException from "./globalException";
+import * as commonResult from "./commonResult";
 class AllRouterLoader {
   static allRouterLoader: AllRouterLoader = new AllRouterLoader();
   app!: Koa;
 
   init(app: Koa) {
     this.app = app;
+    Object.assign(this.app.context, commonResult);
+    this.app.use(globalException);
     this.loadRouterWrap();
 
     this.listen();

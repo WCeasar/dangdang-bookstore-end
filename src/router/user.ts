@@ -7,12 +7,12 @@ router.prefix("/userModule");
 
 router.get("/findUserInfo/:username", (ctx: Koa.Context) => {
   const { username } = ctx.params;
-  ctx.body = username;
+  ctx.body = ctx.success(username);
 });
 
 router.post("/addUser", (ctx: Koa.Context) => {
   const userinfo: UserInfo = ctx.request.body;
-  ctx.body = userinfo;
+  ctx.body = ctx.success(userinfo);
 });
 
 type UserInfo = {
