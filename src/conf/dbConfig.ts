@@ -42,14 +42,14 @@ class DbConfig {
         host: "127.0.0.1",
         port: 3306,
         user: "admin",
-        password: "root",
+        password: "12345",
         database: "dangdang",
       },
       prod: {
         host: "127.0.0.1",
         port: 3306,
         user: "admin",
-        password: "root",
+        password: "123456",
         database: "dangdang",
       },
     };

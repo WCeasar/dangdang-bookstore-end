@@ -1,23 +1,19 @@
 import Router from "koa-router";
 import Koa from "koa";
+import userDao from "../dao/userDao";
 
 const router = new Router();
 
 router.prefix("/userModule");
 
-router.get("/findUserInfo/:username", (ctx: Koa.Context) => {
-  const { username } = ctx.params;
-  ctx.body = ctx.success(username);
+router.get("/findUserInfo/:username/:password", async (ctx: Koa.Context) => {
+  const { username, password } = ctx.params;
+
+  const UserInfoArr = await userDao.findUserInfo(username, password);
+
+  ctx.body = ctx.success(UserInfoArr[0]);
 });
 
-router.post("/addUser", (ctx: Koa.Context) => {
-  const userinfo: UserInfo = ctx.request.body;
-  ctx.body = ctx.success(userinfo);
-});
-
-type UserInfo = {
-  username: "zs";
-  password: "123";
-};
+router.post("/addUser", (ctx: Koa.Context) => {});
 
 module.exports = router;
