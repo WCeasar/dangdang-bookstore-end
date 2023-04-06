@@ -1,7 +1,16 @@
 import Router from "koa-router";
 import Koa from "koa";
 import userDao from "../dao/userDao";
-import { addUser, findAllUser, findAllUserByProp } from "../dao/userDaoDefine";
+import {
+  addUser,
+  findAllUser,
+  findAllUserByProp,
+  findUserByUsernameAndPassword,
+  findUserByLike,
+  findUserByNameAndAddress,
+  findUserByGroupAddressAndCountValid,
+  findUserPage,
+} from "../dao/userDaoDefine";
 import { UserInfo } from "../interfaces/UserInfo";
 
 const router = new Router();
@@ -34,6 +43,48 @@ router.get("/findAllUserByProp", async (ctx: Koa.Context) => {
   const allUser = await findAllUserByProp();
   console.log(allUser);
   ctx.body = ctx.success(allUser);
+});
+
+/** 根据用户名和密码来查询某一条数据 */
+router.get(
+  "/findUserByUsernameAndPassword/:username/:password",
+  async (ctx: Koa.Context) => {
+    const { username, password } = ctx.params;
+    const user = await findUserByUsernameAndPassword(username, password);
+    ctx.body = ctx.success(user);
+  }
+);
+
+/** 模糊查询 */
+router.get("/findUserByLike/:likeData", async (ctx: Koa.Context) => {
+  const { likeData } = ctx.params;
+  const userArr = await findUserByLike(likeData);
+  ctx.body = ctx.success(userArr);
+});
+
+/** 查询姓名为带l和城市为beijing的数据的数据 */
+router.get("/findUserByNameAndAddress", async (ctx: Koa.Context) => {
+  console.log("findUserByNameAndAddress");
+  const userArr = await findUserByNameAndAddress();
+  ctx.body = ctx.success(userArr);
+});
+
+/** 在合法条件下查询以城市进行分类的数据以及并统计合法数 */
+router.get("/findUserByGroupAddressAndCountValid", async (ctx: Koa.Context) => {
+  const userArr = await findUserByGroupAddressAndCountValid();
+  ctx.body = ctx.success(userArr);
+});
+
+/** 在合法条件下查询以城市进行分类的数据以及并统计合法数 */
+router.get("/findUserByGroupAddressAndCountValid", async (ctx: Koa.Context) => {
+  const userArr = await findUserByGroupAddressAndCountValid();
+  ctx.body = ctx.success(userArr);
+});
+
+router.get("/findUserPage/:pageNo/:pageSize", async (ctx: Koa.Context) => {
+  const { pageNo, pageSize } = ctx.params;
+  const userArr = await findUserPage(pageNo, pageSize);
+  ctx.body = ctx.success(userArr);
 });
 
 module.exports = router;
