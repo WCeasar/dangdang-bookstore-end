@@ -1,7 +1,7 @@
 /* 数据库连接配置接口 **/
 interface DbConCof {
   host: string;
-  port: number;
+  port: number | any;
   user: string;
   password: string;
   database: string;
@@ -61,7 +61,7 @@ class DbConfig {
     if (isDbConCofKey(data) && data.length > 0) {
       // const temp = this.envDbConf[this.env][data]; // T1 const temp: string | number
       // this.envDbConf[this.env][data] = value; // T2 不能将类型“any”分配给类型“never”。
-      (this.envDbConf[this.env][data] as any) = value;
+      this.envDbConf[this.env][data] = value;
     } else {
       this.envDbConf[this.env] = data;
     }

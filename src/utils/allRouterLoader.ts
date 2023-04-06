@@ -1,12 +1,11 @@
 /**
  * 路由自动导入中间件
  */
-
+import body from "koa-body";
 import Koa from "koa";
 import path from "path";
 import fs from "fs";
 import Router from "koa-router";
-import body from "koa-body";
 import json from "koa-json";
 import globalException from "./globalException";
 import * as commonResult from "./commonResult";
