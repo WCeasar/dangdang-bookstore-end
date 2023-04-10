@@ -7,14 +7,14 @@ enum statusCode {
 }
 
 class CommonResult {
-  static success(data = undefined, message = "") {
+  static success(data = undefined, message = "success") {
     return {
       data,
       message,
       code: statusCode.SUCCESS,
     };
   }
-  static fail(message = "") {
+  static fail(message = "fail") {
     return {
       undefined,
       message,

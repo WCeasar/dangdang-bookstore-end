@@ -64,7 +64,6 @@ router.get("/findUserByLike/:likeData", async (ctx: Koa.Context) => {
 
 /** 查询姓名为带l和城市为beijing的数据的数据 */
 router.get("/findUserByNameAndAddress", async (ctx: Koa.Context) => {
-  console.log("findUserByNameAndAddress");
   const userArr = await findUserByNameAndAddress();
   ctx.body = ctx.success(userArr);
 });

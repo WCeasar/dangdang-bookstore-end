@@ -1,8 +1,8 @@
 /**
  * 路由自动导入中间件
  */
-import body from "koa-body";
 import Koa from "koa";
+import body from "koa-body";
 import path from "path";
 import fs from "fs";
 import Router from "koa-router";

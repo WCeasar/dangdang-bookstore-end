@@ -5,7 +5,7 @@ import dbConfig from "./conf/dbConfig";
 
 const app = new Koa();
 
-dbConfig.setConf("password", "root");
+dbConfig.setConf("password", "123456");
 console.log(dbConfig.getConf());
 
 allRouterLoader.init(app);
