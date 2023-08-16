@@ -3,8 +3,8 @@ import dbConfig from '../conf/dbConfig'
 import path from 'path'
 import logUtils from '../utils/logUtils'
 
-class BaseDaoOrm {
-  static baseDaoOrm: BaseDaoOrm = new BaseDaoOrm()
+class BaseDao {
+  static baseDao: BaseDao = new BaseDao()
   sequelize!: Sequelize
 
   constructor() {
@@ -20,17 +20,27 @@ class BaseDaoOrm {
       define: {
         freezeTableName: true,
         timestamps: false
+      },
+      pool: {
+        max: 10,
+        min: 5,
+        idle: 10000,
+        acquire: 1000
       }
     })
     this.sequelize = sequelize
-    this.addModel()
   }
 
   addModel() {
-    const modelPath = path.join(process.cwd(), 'src/ormModel')
+    const modelPath = path.join(process.cwd(), 'src/modules/decorModel')
     logUtils.debug('addModels...')
     this.sequelize.addModels([modelPath])
   }
 }
 
-export default BaseDaoOrm.baseDaoOrm
+const baseDao = BaseDao.baseDao
+baseDao.addModel()
+
+export default baseDao
+
+export const { sequelize } = baseDao

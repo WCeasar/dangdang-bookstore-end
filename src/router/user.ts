@@ -1,8 +1,8 @@
 import Router from 'koa-router'
 import Koa from 'koa'
-import userDao from '../dao/userDao'
 import {
   addUser,
+  findUserInfo,
   findAllUser,
   findAllUserByProp,
   findUserByUsernameAndPassword,
@@ -10,19 +10,19 @@ import {
   findUserByNameAndAddress,
   findUserByGroupAddressAndCountValid,
   findUserPage
-} from '../dao/userDaoDefine'
+} from '../modules/userInfo/dao/userDao'
 import { UserInfo } from '../interfaces/UserInfo'
-import UserDaoOrm from '../dao/userDaoOrm'
 
 const router = new Router()
 
 router.prefix('/userModule')
 
 /** 根据姓名和密码查询某个用户 */
-router.get('/findUserInfo/:username/:password', async (ctx: Koa.Context) => {
-  const { username, password } = ctx.params
-  const UserInfoArr = await userDao.findUserInfo(username, password)
-  ctx.body = ctx.success(UserInfoArr[0])
+router.get('/findUserInfo', async (ctx: Koa.Context) => {
+  const { username, password } = ctx.request.query
+  const UserInfoArr = await findUserInfo(username as string, password as string)
+  console.log(UserInfoArr)
+  ctx.body = ctx.success(UserInfoArr)
 })
 
 /** 添加新用户 */
@@ -34,7 +34,7 @@ router.post('/addUser', async (ctx: Koa.Context) => {
 
 /** 查询所有用户 */
 router.get('/findAllUser', async (ctx: Koa.Context) => {
-  const res = await UserDaoOrm.findAllUser()
+  const res = await findAllUser()
   ctx.body = ctx.success(res)
 })
 

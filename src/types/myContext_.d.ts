@@ -1,9 +1,10 @@
-import "koa";
+import 'koa'
 
-declare module "koa" {
+declare module 'koa' {
   export interface ContextDelegatedRequest {
-    params: any;
-    success: any;
-    fail: any;
+    params: any
+    success: any
+    fail: any
+    query: any
   }
 }
